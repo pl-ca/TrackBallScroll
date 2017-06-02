@@ -17,6 +17,7 @@ Menu, Tray, Add, % "Exit", ExitNow
 CoordMode, Mouse, Screen
 global scroll_value:=0
 global scroll_speed:=32
+global scrolling := false
 scrollActive( obutton := "RButton", extra := "" )
 {
 	extraup := ""
@@ -28,7 +29,8 @@ scrollActive( obutton := "RButton", extra := "" )
 	Sleep, 200
 	if ( GetKeyState( obutton, "p") ) {
 		MouseGetPos, x1, y1
-		Loop {
+		scrolling := true
+		while(scrolling) {
 			Sleep, 1
 			BlockInput MouseMove
 			MouseGetPos, x2, y2
@@ -77,7 +79,6 @@ scrollActive( obutton := "RButton", extra := "" )
 			}
 			BlockInput MouseMoveOff
 		}
-		Until NOT ( GetKeyState( obutton, "p") )
 	}
 	else {
 		SendInput, % extradown . "{" . obutton . "}" . extraup
@@ -88,6 +89,10 @@ scrollActive( obutton := "RButton", extra := "" )
 
 RButton::
 	scrollActive( "RButton" )
+return
+
+RButton up::
+	scrolling := false
 return
 
 ; ==============================
