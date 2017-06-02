@@ -27,11 +27,11 @@ scrollActive( obutton := "RButton", extra := "" )
 	}
 	Sleep, 200
 	if ( GetKeyState( obutton, "p") ) {
+		MouseGetPos, x1, y1
 		Loop {
-			MouseGetPos, x1, y1
 			Sleep, 1
-			MouseGetPos, x2, y2
 			BlockInput MouseMove
+			MouseGetPos, x2, y2
 			MouseMove, x1, y1, 0
 			if ( y1 <> y2 ) {
 				SendInput, % extradown
