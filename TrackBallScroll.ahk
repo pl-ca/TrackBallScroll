@@ -18,6 +18,7 @@ CoordMode, Mouse, Screen
 global scroll_value:=0
 global scroll_speed:=32
 global scrolling := false
+global ctrl_mod := false
 scrollActive( obutton := "RButton", extra := "" )
 {
 	extraup := ""
@@ -30,7 +31,7 @@ scrollActive( obutton := "RButton", extra := "" )
 	if ( GetKeyState( obutton, "p") ) {
 		MouseGetPos, x1, y1
 		scrolling := true
-		while(scrolling) {
+		while scrolling {
 			Sleep, 1
 			BlockInput MouseMove
 			MouseGetPos, x2, y2
@@ -80,11 +81,6 @@ scrollActive( obutton := "RButton", extra := "" )
 			BlockInput MouseMoveOff
 		}
 	}
-	else {
-		SendInput, % extradown . "{" . obutton . "}" . extraup
-	}
-	scroll:=0
-
 }
 
 RButton::
@@ -92,6 +88,9 @@ RButton::
 return
 
 RButton up::
+	if !scrolling {
+		Send, {RButton}
+	}
 	scrolling := false
 return
 
@@ -99,7 +98,6 @@ return
 <^RButton::
 	scrollActive( "RButton", "LCtrl" )
 return
-
 
 >^RButton::
 	scrollActive( "RButton", "RCtrl" )
