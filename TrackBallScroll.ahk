@@ -83,11 +83,11 @@ scrollActive( obutton := "RButton", extra := "" )
 	}
 }
 
-RButton::
+$RButton::
 	scrollActive( "RButton" )
 return
 
-RButton up::
+$RButton up::
 	if !scrolling {
 		Send, {RButton}
 	}
@@ -95,31 +95,31 @@ RButton up::
 return
 
 ; ==============================
-<^RButton::
+$<^RButton::
 	scrollActive( "RButton", "LCtrl" )
 return
 
->^RButton::
+$>^RButton::
 	scrollActive( "RButton", "RCtrl" )
 return
 
 ; ==============================
-<!RButton::
+$<!RButton::
 	scrollActive( "RButton", "LAlt" )
 return
 
 
->!RButton::
+$>!RButton::
 	scrollActive( "RButton", "RAlt" )
 return
 
 ; ==============================
-<+RButton::
+$<+RButton::
 	scrollActive( "RButton", "LShift" )
 return
 
 
->+RButton::
+$>+RButton::
 	scrollActive( "RButton", "RShift" )
 return
 
