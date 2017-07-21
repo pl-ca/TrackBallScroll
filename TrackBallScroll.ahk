@@ -35,12 +35,12 @@ scrollActive( )
 			modifier:=0
 			if ( y2 > y1 ) {
 				modifier:=1
-				key:="^{NumpadAdd}"
+				key:="^{NumpadSub}"
 				wheel:="{WheelDown Down}"
 			}
 			else if ( y2 < y1 ) {
 				modifier:=-1
-				key:="^{NumpadSub}"
+				key:="^{NumpadAdd}"
 				wheel:="{WheelUp Down}"
 			}
 
