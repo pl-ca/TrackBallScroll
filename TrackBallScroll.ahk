@@ -18,8 +18,8 @@ CoordMode, Mouse, Screen
 global scroll_value:=0
 global scroll_speed:=32
 global scrolling := false
-scrollActive( )
-{
+
+*$RButton::
 	Sleep, 200 ; Wait to see if button is held down or on the way to be released (clicK)
 	if ( GetKeyState( "RButton", "p") ) {
 		MouseGetPos, x1, y1
@@ -35,13 +35,11 @@ scrollActive( )
 			modifier:=0
 			if ( y2 > y1 ) {
 				modifier:=1
-				key:="^{NumpadSub}"
-				wheel:="{WheelDown Down}"
+				wheel:="{Blind}{WheelDown Down}"
 			}
 			else if ( y2 < y1 ) {
 				modifier:=-1
-				key:="^{NumpadAdd}"
-				wheel:="{WheelUp Down}"
+				wheel:="{Blind}{WheelUp Down}"
 			}
 
 			if ( modifier != 0 )
@@ -57,12 +55,7 @@ scrollActive( )
 				{
 					While n > 0
 					{
-						if ( GetKeyState( "Control", "p") ) {
-							SendInput % key
-						}
-						else{
-							SendInput % wheel
-						}
+						SendInput % wheel
 						n--
 						scroll_value-=modifier*scroll_speed
 					}
@@ -71,15 +64,11 @@ scrollActive( )
 			BlockInput MouseMoveOff
 		}
 	}
-}
-
-*$RButton::
-	scrollActive( )
 return
 
-$RButton up::
+*$RButton up::
 	if !scrolling {
-		Send, {RButton}
+		SendInput, {Blind}{RButton}
 	}
 	scrolling := false
 return
