@@ -18,13 +18,16 @@ CoordMode, Mouse, Screen
 global scroll_value:=0
 global scroll_speed:=32
 global scrolling := false
+global button_down := false
 
 *$RButton::
+	; Right mouse button down: start scrolling if held long enough
+	button_down := true
 	Sleep, 200 ; Wait to see if button is held down or on the way to be released (clicK)
 	if ( GetKeyState( "RButton", "p") ) {
 		MouseGetPos, x1, y1
 		scrolling := true
-		while scrolling {
+		while scrolling && button_down {
 			Sleep, 1
 			BlockInput MouseMove
 			MouseGetPos, x2, y2
@@ -63,14 +66,30 @@ global scrolling := false
 			}
 			BlockInput MouseMoveOff
 		}
+		scrolling :=false
 	}
 return
 
 *$RButton up::
+	; Right mouse button click or stop scrolling
+	button_down := false
 	if !scrolling {
 		SendInput, {Blind}{RButton}
 	}
-	scrolling := false
+return
+
+$XButton1::
+	; Back mouse button mapped to middle click
+	SendInput, {MButton down}
+return
+$XButton1 up::
+	; Back mouse button mapped to middle click
+	SendInput, {MButton up}
+return
+
+$XButton2 up::
+	; Forward mouse button mapped to Back mouse button
+	SendInput, {Xbutton1}
 return
 
 About:
